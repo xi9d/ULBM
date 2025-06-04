@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist's Links - Premium Travel Bookmark Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.95), rgba(42, 82, 152, 0.95)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><rect width="100%" height="100%" fill="url(%23a)"/></svg>');
+            backdrop-filter: blur(20px);
+            padding: 40px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 8s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #4CAF50, #2196F3, #f44336);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 4s ease-in-out infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .premium-btn, .signup-btn, .newsletter-btn, .add-link-btn, .form-submit, .floating-action, .toggle-btn {
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .premium-btn {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            box-shadow: 0 8px 30px rgba(244, 67, 54, 0.3);
+        }
+
+        .signup-btn {
+            background: linear-gradient(135deg, #4CAF50, #388e3c);
+            box-shadow: 0 8px 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .newsletter-btn {
+            background: linear-gradient(135deg, #2196F3, #1976d2);
+            padding: 15px 30px;
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .add-link-btn {
+            background: linear-gradient(135deg, #4CAF50, #388e3c);
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .premium-btn::before, .signup-btn::before, .newsletter-btn::before, .add-link-btn::before, .floating-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .premium-btn:hover::before, .signup-btn:hover::before, .newsletter-btn:hover::before, .add-link-btn:hover::before, .floating-action:hover::before {
+            left: 100%;
+        }
+
+        .premium-btn:hover, .signup-btn:hover, .newsletter-btn:hover, .add-link-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .newsletter-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .newsletter-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input, .search-input, .form-input {
+            padding: 15px 20px;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input::placeholder, .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .newsletter-input:focus, .search-input:focus, .form-input:focus {
+            border-color: #2196F3;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(33, 150, 243, 0.2);
+        }
+
+        .search-bar {
+            margin: 40px 20px 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 700px;
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .category {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .category:nth-child(1) { animation-delay: 0.1s; }
+        .category:nth-child(2) { animation-delay: 0.2s; }
+        .category:nth-child(3) { animation-delay: 0.3s; }
+        .category:nth-child(4) { animation-delay: 0.4s; }
+        .category:nth-child(5) { animation-delay: 0.5s; }
+        .category:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4CAF50, #2196F3, #f44336);
+            background-size: 300% 100%;
+            animation: gradientSlide 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientSlide {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .category:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 80px rgba(0,0,0,0.12);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-right: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+        }
+
+        .category:hover .category-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex: 1;
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, #000000, #151d25);
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+        }
+
+        .subcategories {
+            display: none;
+            gap: 20px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .subcategories.collapsed {
+            display: grid;
+        }
+
+        .subcategory {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 18px;
+            border-left: 5px solid #4CAF50;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subcategory::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .subcategory:hover::before {
+            left: 100%;
+        }
+
+        .subcategory:hover {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+            border-left-color: #f44336;
+        }
+
+        .subcategory-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .link-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .link-placeholder {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+            color: #1772cc;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 2px solid rgba(33, 150, 243, 0.2);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-placeholder:hover::before {
+            left: 100%;
+        }
+
+        .link-placeholder:hover {
+            background: linear-gradient(135deg, #2196F3, #1976d2);
+            color: white;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+        }
+
+        .stats {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            color: #2c3e50;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
+            box-shadow: 0 15px 40px rgba(244, 67, 54, 0.4);
+            z-index: 1000;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 20px 50px rgba(244, 67, 54, 0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, white, #f8f9fa);
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px) scale(0.8); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #4CAF50, #2196F3, #f44336);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(177, 15, 15, 0.8);
+            border: 2px solid rgba(33, 150, 243, 0.2);
+            border-radius: 12px;
+            color: #333;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #f44336;
+        }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; padding: 15px; }
+            .logo { font-size: 3rem; }
+            .stats { position: relative; margin: 20px; top: 0; right: 0; }
+            .cta-section { flex-direction: column; align-items: center; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-input { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <h1 class="logo">🌍 TOURIST'S LINKS</h1>
+        <p class="tagline">Get Access to some awesome and hidden content out there. I am just a bridge.</p>
+        <!-- <div class="cta-section">
+            <button class="premium-btn" onclick="openSignupModal('premium')">🚀 Get Premium Access</button>
+            <button class="signup-btn" onclick="openSignupModal('free')">✨ Sign Up Free</button>
+        </div> -->
+        <div class="newsletter-section">
+            <h3 class="newsletter-title">🎯 Join Our Link Community</h3>
+            <p class="newsletter-subtitle">Get exclusive links, hidden gems, and premium bookmark collections delivered weekly</p>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                <input type="email" class="newsletter-input" placeholder="Enter your email for link insights..." required>
+                <button type="submit" class="newsletter-btn">Subscribe Premium</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="🔍 Search your travel bookmarks..." id="searchInput" oninput="searchBookmarks()">
+    </div>
+
+    <div class="stats">
+        <div><strong>Travel Categories:</strong> <span id="categoryCount">0</span></div>
+        <div><strong>Premium Links:</strong> <span id="linkCount">0</span></div>
+        <div><strong>Favorites:</strong> <span id="favoritesCount">0</span></div>
+        <div><strong>Community:</strong> <span id="memberCount" >0</span> tourist Visited</div>
+    </div>
+
+    <div class="container" id="bookmarkContainer">
+        <!-- Categories will be dynamically populated -->
+    </div>
+
+    <button class="floating-action" onclick="openAddCategoryModal()">+</button>
+
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">×</span>
+            <h2 class="modal-header" id="signupModalTitle">Sign Up</h2>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label class="form-label" for="signupName">Name</label>
+                    <input type="text" class="form-input" id="signupName" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signupEmail">Email</label>
+                    <input type="email" class="form-input" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signupPassword">Password</label>
+                    <input type="password" class="form-input" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="form-submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addLinkModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addLinkModal')">×</span>
+            <h2 class="modal-header">Add New Link</h2>
+            <form id="addLinkForm" onsubmit="addLink(event)">
+                <div class="form-group">
+                    <label class="form-label" for="linkName">Link Name</label>
+                    <input type="text" class="form-input" id="linkName" placeholder="Enter link name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="linkUrl">URL</label>
+                    <input type="url" class="form-input" id="linkUrl" placeholder="Enter URL (https://...)" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="linkSubcategory">Subcategory</label>
+                    <select class="form-input" id="linkSubcategory" required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <button type="submit" class="form-submit">Add Link</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addCategoryModal')">×</span>
+            <h2 class="modal-header">Add New Category</h2>
+            <form id="addCategoryForm" onsubmit="addCategory(event)">
+                <div class="form-group">
+                    <label class="form-label" for="categoryName">Category Name</label>
+                    <input type="text" class="form-input" id="categoryName" placeholder="Enter category name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="categoryIcon">Category Icon (Emoji)</label>
+                    <input type="text" class="form-input" id="categoryIcon" placeholder="Enter emoji (e.g., 🌍)" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="subcategoryName">Initial Subcategory</label>
+                    <input type="text" class="form-input" id="subcategoryName" placeholder="Enter subcategory name" required>
+                </div>
+                <button type="submit" class="form-submit">Add Category</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://xi9d.pythonanywhere.com/api';
+
+        // Toggle category collapse/expand
+        function toggleCategory(header) {
+            const subcategories = header.nextElementSibling;
+            const toggleBtn = header.querySelector('.toggle-btn');
+            subcategories.classList.toggle('collapsed');
+            toggleBtn.textContent = subcategories.classList.contains('collapsed') ? '-' : '+';
+        }
+
+        // Open signup modal
+        function openSignupModal(type) {
+            const modal = document.getElementById('signupModal');
+            const title = document.getElementById('signupModalTitle');
+            title.textContent = type === 'premium' ? 'Get Premium Access' : 'Sign Up Free';
+            modal.style.display = 'block';
+        }
+
+        // Open add link modal and populate subcategories
+        async function openAddLinkModal() {
+            const modal = document.getElementById('addLinkModal');
+            const subcategorySelect = document.getElementById('linkSubcategory');
+            subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/categories`);
+                const categories = await response.json();
+                categories.forEach(category => {
+                    category.subcategories.forEach(sub => {
+                        const option = document.createElement('option');
+                        option.value = sub.id;
+                        option.textContent = `${category.name} - ${sub.name}`;
+                        subcategorySelect.appendChild(option);
+                    });
+                });
+                modal.style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching subcategories:', error);
+                alert('Failed to load subcategories. Please try again.');
+            }
+        }
+
+        // Open add category modal
+        function openAddCategoryModal() {
+            const modal = document.getElementById('addCategoryModal');
+            modal.style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            const forms = modal.getElementsByTagName('form');
+            for (const form of forms) {
+                form.reset();
+            }
+        }
+
+        // Handle signup form submission
+        async function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const role = document.getElementById('signupModalTitle').textContent.includes('Premium') ? 'manager' : 'rep';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, role })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`Signed up successfully as ${result[0].name}`);
+                    closeModal('signupModal');
+                    updateStats();
+                } else {
+                    alert(`Signup failed: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                alert('An error occurred during signup. Please try again.');
+            }
+        }
+
+        // Handle newsletter subscription
+        async function subscribeNewsletter(event) {
+            event.preventDefault();
+            const name = event.target.querySelector('.newsletter-input').value;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/customers`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, created_at: Date.UTC() })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`Subscribed successfully with email: ${name}`);
+                    event.target.reset();
+                    updateStats();
+                } else {
+                    alert(`Subscription failed: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Subscription error:', error);
+                alert('An error occurred during subscription. Please try again.');
+            }
+        }
+
+        // Add new link
+        async function addLink(event) {
+            event.preventDefault();
+            const title = document.getElementById('linkName').value;
+            const url = document.getElementById('linkUrl').value;
+            const subcategory_id = document.getElementById('linkSubcategory').value;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/bookmarks`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, url, subcategory_id })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Bookmark added successfully');
+                    closeModal('addLinkModal');
+                    loadBookmarks();
+                    updateStats();
+                } else {
+                    alert(`Failed to add bookmark: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Add bookmark error:', error);
+                alert('An error occurred while adding the bookmark. Please try again.');
+            }
+        }
+
+        // Add new category
+        async function addCategory(event) {
+            event.preventDefault();
+            const categoryName = document.getElementById('categoryName').value;
+            const categoryIcon = document.getElementById('categoryIcon').value;
+            const subcategoryName = document.getElementById('subcategoryName').value;
+
+            try {
+                // Add category
+                const categoryResponse = await fetch(`${API_BASE_URL}/categories`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: categoryName, icon: categoryIcon })
+                });
+                const categoryResult = await categoryResponse.json();
+                if (!categoryResponse.ok) {
+                    throw new Error(categoryResult.error);
+                }
+                const categoryId = categoryResult[0].id;
+
+                // Add subcategory
+                const subcategoryResponse = await fetch(`${API_BASE_URL}/subcategories`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category_id: categoryId, name: subcategoryName })
+                });
+                if (!subcategoryResponse.ok) {
+                    throw new Error((await subcategoryResponse.json()).error);
+                }
+
+                alert('Category added successfully');
+                closeModal('addCategoryModal');
+                loadBookmarks();
+                updateStats();
+            } catch (error) {
+                console.error('Add category error:', error);
+                alert('An error occurred while adding the category. Please try again.');
+            }
+        }
+
+        // Search bookmarks
+        async function searchBookmarks() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('bookmarkContainer');
+            container.innerHTML = '';
+
+            try {
+                if (!query) {
+                    loadBookmarks();
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}`);
+                const result = await response.json();
+                if (response.ok) {
+                    if (result.count === 0) {
+                        alert('No bookmarks found matching your search.');
+                        return;
+                    }
+
+                    const grouped = {};
+                    result.results.forEach(bookmark => {
+                        const category = bookmark.category;
+                        const subcategory = bookmark.subcategory;
+                        if (!grouped[category]) {
+                            grouped[category] = {
+                                icon: bookmark.category_icon,
+                                subcategories: {}
+                            };
+                        }
+                        if (!grouped[category].subcategories[subcategory]) {
+                            grouped[category].subcategories[subcategory] = [];
+                        }
+                        grouped[category].subcategories[subcategory].push(bookmark);
+                    });
+
+                    Object.keys(grouped).forEach((category, index) => {
+                        const categoryDiv = document.createElement('div');
+                        categoryDiv.className = 'category';
+                        categoryDiv.dataset.category = category.toLowerCase().replace(/\s+/g, '-');
+                        categoryDiv.style.animationDelay = `${0.1 * (index + 1)}s`;
+
+                        let subcategoriesHtml = '';
+                        Object.keys(grouped[category].subcategories).forEach(subcategory => {
+                            subcategoriesHtml += `
+                                <div class="subcategory">
+                                    <div class="subcategory-title">${subcategory}</div>
+                                    <div class="link-list">
+                                        ${grouped[category].subcategories[subcategory].map(link => `
+                                            <span class="link-placeholder" data-url="${link.url}" data-id="${link.id}" onclick="window.open('${link.url}', '_blank')">${link.title}</span>
+                                        `).join('')}
+                                    </div>
+                                    <button class="add-link-btn" onclick="openAddLinkModal()">+ Add Link</button>
+                                </div>
+                            `;
+                        });
+
+                        categoryDiv.innerHTML = `
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <span class="category-icon">${grouped[category].icon}</span>
+                                <h2 class="category-title">${category}</h2>
+                                <button class="toggle-btn">−</button>
+                            </div>
+                            <div class="subcategories">${subcategoriesHtml}</div>
+                        `;
+                        container.appendChild(categoryDiv);
+                    });
+                } else {
+                    alert(`Search failed: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                alert('An error occurred while searching. Please try again.');
+            }
+        }
+
+        // Load bookmarks from backend
+        async function loadBookmarks() {
+            const container = document.getElementById('bookmarkContainer');
+            container.innerHTML = '';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/bookmarks`);
+                const bookmarks = await response.json();
+                if (response.ok) {
+                    Object.keys(bookmarks).forEach((category, index) => {
+                        const categoryDiv = document.createElement('div');
+                        categoryDiv.className = 'category';
+                        categoryDiv.dataset.category = category.toLowerCase().replace(/\s+/g, '-');
+                        categoryDiv.style.animationDelay = `${0.1 * (index + 1)}s`;
+
+                        let subcategoriesHtml = '';
+                        Object.keys(bookmarks[category].subcategories).forEach(subcategory => {
+                            subcategoriesHtml += `
+                                <div class="subcategory">
+                                    <div class="subcategory-title">${subcategory}</div>
+                                    <div class="link-list">
+                                        ${bookmarks[category].subcategories[subcategory].bookmarks.map(link => `
+                                            <span class="link-placeholder" data-url="${link.url}" data-id="${link.id}" onclick="window.open('${link.url}', '_blank')">${link.title}</span>
+                                        `).join('')}
+                                    </div>
+                                    <button class="add-link-btn" onclick="openAddLinkModal()">+ Add Link</button>
+                                </div>
+                            `;
+                        });
+
+                        categoryDiv.innerHTML = `
+                            <div class="category-header" onclick="toggleCategory(this)">
+                                <span class="category-icon">${bookmarks[category].icon}</span>
+                                <h2 class="category-title">${category}</h2>
+                                <button class="toggle-btn">−</button>
+                            </div>
+                            <div class="subcategories">${subcategoriesHtml}</div>
+                        `;
+                        container.appendChild(categoryDiv);
+                    });
+                    updateStats();
+                } else {
+                    alert(`Failed to load bookmarks: ${bookmarks.error}`);
+                }
+            } catch (error) {
+                console.error('Load bookmarks error:', error);
+                alert('An error occurred while loading bookmarks. Please try again.');
+            }
+        }
+
+        // Update stats
+        async function updateStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const stats = await response.json();
+                if (response.ok) {
+                    document.getElementById('categoryCount').textContent = stats.total_categories;
+                    document.getElementById('linkCount').textContent = stats.total_bookmarks;
+                    document.getElementById('favoritesCount').textContent = stats.favorites;
+                    document.getElementById('memberCount').textContent = (15847 + Math.floor(Math.random() * 100)).toLocaleString();
+                } else {
+                    console.error('Stats error:', stats.error);
+                }
+            } catch (error) {
+                console.error('Stats error:', error);
+            }
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadBookmarks);
+    </script>
+</body>
+</html>
