@@ -10,8 +10,8 @@ import os
 BASE_API_URL = "https://xi9d.pythonanywhere.com/api"
 BOOKMARKS_ENDPOINT = f"{BASE_API_URL}/bookmarks"
 CATEGORIES_ENDPOINT = f"{BASE_API_URL}/categories"
-API_KEY = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2Y3N1b2FidWx0bWF4YXdiYXJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc0NTMwOTUsImV4cCI6MjA2MzAyOTA5NX0.NY-E0bM1hYwRelGWvVSbTrc9MxET_Fd04gS7zAshoN0"
-SERPAPI_KEY = "97e1fba8d97e26b00c792dc6061aede436e3fca822dbc4a0e6085c2622e32dd9"
+API_KEY = "api here"
+SERPAPI_KEY = "api here"
 CSV_FILE = 'scraped_bookmarks.csv'
 RESULTS_PER_QUERY = 10
 TARGET_QUERIES = 1000  # Target number of queries
