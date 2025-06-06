@@ -15,6 +15,8 @@
             --secondary-bg: #252525;
             --muted-text: #b0b0b0;
             --favorite-color: #ff4444;
+            --card-bg: #2f2f2f;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         [data-theme="light"] {
@@ -27,21 +29,23 @@
             --secondary-bg: #fff;
             --muted-text: #666;
             --favorite-color: #d32f2f;
+            --card-bg: #fff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-color);
             color: var(--text-color);
             min-height: 100vh;
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 14px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -51,14 +55,14 @@
         .main-sidebar {
             width: 260px;
             background: var(--sidebar-bg);
-            padding: 20px;
+            padding: 24px;
             position: fixed;
             height: 100%;
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             gap: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
 
         .category-sidebar {
@@ -73,11 +77,15 @@
         }
 
         .sidebar-logo {
-            font-size: 1.9rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: var(--text-color);
             letter-spacing: -0.02em;
             text-transform: uppercase;
+            background: linear-gradient(45deg, var(--accent-color), var(--hover-bg));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .sidebar-nav {
@@ -87,14 +95,15 @@
         }
 
         .sidebar-nav button, .sidebar-nav input {
-            padding: 10px 15px;
+            padding: 10px 16px;
             font-size: 0.9rem;
             border: 1px solid var(--border-color);
             background: var(--secondary-bg);
             color: var(--text-color);
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
             text-align: left;
+            font-weight: 500;
         }
 
         .sidebar-nav input {
@@ -105,6 +114,7 @@
             background: var(--accent-color);
             color: var(--bg-color);
             border-color: var(--accent-color);
+            transform: translateY(-1px);
         }
 
         .sidebar-nav input::placeholder {
@@ -125,10 +135,11 @@
 
         .theme-toggle label {
             cursor: pointer;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             background: var(--secondary-bg);
+            font-weight: 500;
         }
 
         .theme-toggle input:checked + label {
@@ -137,7 +148,7 @@
         }
 
         .newsletter-section, .user-section {
-            margin-top: 20px;
+            margin-top: 24px;
         }
 
         .newsletter-title, .user-title {
@@ -160,17 +171,18 @@
         }
 
         .newsletter-input, .signin-input {
-            padding: 10px 12px;
+            padding: 10px 14px;
             font-size: 0.85rem;
             border: 1px solid var(--border-color);
             background: var(--secondary-bg);
             color: var(--text-color);
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .newsletter-input:focus, .signin-input:focus {
             border-color: var(--accent-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
         }
 
         .newsletter-btn, .signin-btn {
@@ -180,11 +192,13 @@
             color: var(--bg-color);
             border: none;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-weight: 500;
         }
 
         .newsletter-btn:hover, .signin-btn:hover {
             background: var(--hover-bg);
+            transform: translateY(-1px);
         }
 
         .stats {
@@ -205,7 +219,7 @@
         }
 
         .category-item {
-            padding: 10px 12px;
+            padding: 12px 14px;
             font-size: 0.9rem;
             background: var(--sidebar-bg);
             border: 1px solid var(--border-color);
@@ -213,13 +227,14 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: all 0.3s ease;
         }
 
         .category-item:hover {
             background: var(--accent-color);
             color: var(--bg-color);
+            transform: translateY(-1px);
         }
 
         .category-item-icon {
@@ -236,68 +251,83 @@
 
         .hero-section {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .tagline {
             color: var(--muted-text);
-            font-size: 1rem;
+            font-size: 1.1rem;
             max-width: 700px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
         .content-section {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .category-block {
             background: var(--secondary-bg);
-            padding: 20px;
+            padding: 24px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
 
         .category-header {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .category-title {
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--text-color);
             flex: 1;
         }
 
         .category-icon {
             font-size: 1.8rem;
-            margin-right: 10px;
+            margin-right: 12px;
         }
 
         .subcategory {
-            padding: 12px;
-            border-left: 3px solid var(--accent-color);
-            margin-bottom: 12px;
-            background: var(--sidebar-bg);
-            border-radius: 4px;
+            padding: 14px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 14px;
+            background: var(--card-bg);
+            border-radius: 6px;
         }
 
         .subcategory-title {
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
             color: var(--text-color);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subcategory-title::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .subcategory-title.collapsed::after {
+            transform: rotate(180deg);
         }
 
         .link-list {
             display: none;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 16px;
             flex-direction: column;
         }
 
@@ -306,51 +336,72 @@
         }
 
         .link-placeholder {
-            background: var(--border-color);
-            color: var(--text-color);
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            background: var(--card-bg);
+            padding: 16px;
+            font-size: 0.9rem;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 8px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .link-placeholder:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-placeholder.active .link-preview {
+            display: block;
         }
 
         .link-info {
-            flex-grow: 1;
             cursor: pointer;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .link-preview {
+            display: none;
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--secondary-bg);
+        }
+
+        .link-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .link-description {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--muted-text);
-            margin-top: 4px;
         }
 
         .link-tags {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: var(--muted-text);
-            margin-top: 4px;
+            font-style: italic;
         }
 
         .link-actions {
             display: flex;
-            gap: 8px;
+            gap: 12px;
+            align-items: center;
         }
 
-        .favorite-btn, .delete-btn {
+        .favorite-btn, .delete-btn, .preview-btn {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--muted-text);
         }
 
@@ -358,7 +409,7 @@
             color: var(--favorite-color);
         }
 
-        .favorite-btn:hover, .delete-btn:hover {
+        .favorite-btn:hover, .delete-btn:hover, .preview-btn:hover {
             color: var(--accent-color);
         }
 
@@ -371,33 +422,34 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
             background: var(--secondary-bg);
             margin: 10% auto;
-            padding: 25px;
+            padding: 30px;
             border: 1px solid var(--border-color);
             width: 90%;
-            max-width: 450px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
         }
 
         .modal-header {
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: var(--text-color);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 500;
             color: var(--text-color);
         }
@@ -407,29 +459,32 @@
             background: var(--sidebar-bg);
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 10px 12px;
-            font-size: 0.85rem;
-            border-radius: 4px;
+            padding: 12px 14px;
+            font-size: 0.9rem;
+            border-radius: 6px;
         }
 
         .form-input:focus, .form-input select:focus {
             border-color: var(--accent-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
         }
 
         .form-submit {
             width: 100%;
-            padding: 10px;
-            font-size: 0.85rem;
+            padding: 12px;
+            font-size: 0.9rem;
             background: var(--accent-color);
             color: var(--bg-color);
             border: none;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-weight: 500;
         }
 
         .form-submit:hover {
             background: var(--hover-bg);
+            transform: translateY(-1px);
         }
 
         .close {
@@ -446,20 +501,22 @@
 
         .add-link-global {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 12px 20px;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 24px;
             font-size: 0.9rem;
             background: var(--accent-color);
             color: var(--bg-color);
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
+            font-weight: 500;
         }
 
         .add-link-global:hover {
             background: var(--hover-bg);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
@@ -481,16 +538,20 @@
 
             .main-content {
                 margin-left: 0;
-                padding: 15px;
+                padding: 16px;
             }
 
             .sidebar-logo {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
 
             .add-link-global {
-                bottom: 15px;
-                right: 15px;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .link-preview {
+                height: 150px;
             }
         }
     </style>
@@ -640,6 +701,7 @@
         const API_BASE_URL = 'https://xi9d.pythonanywhere.com/api';
         let currentUser = null;
         let apiKey = null;
+        let activeBookmark = null;
 
         // Toggle theme
         function toggleTheme() {
@@ -660,6 +722,23 @@
         function toggleSubcategory(title) {
             const linkList = title.nextElementSibling;
             linkList.classList.toggle('collapsed');
+            title.classList.toggle('collapsed');
+        }
+
+        // Toggle preview for a bookmark
+        function togglePreview(bookmarkId, url) {
+            const linkPlaceholder = document.querySelector(`.link-placeholder[data-id="${bookmarkId}"]`);
+            if (activeBookmark === bookmarkId) {
+                linkPlaceholder.classList.remove('active');
+                activeBookmark = null;
+            } else {
+                if (activeBookmark) {
+                    const previousActive = document.querySelector(`.link-placeholder[data-id="${activeBookmark}"]`);
+                    if (previousActive) previousActive.classList.remove('active');
+                }
+                linkPlaceholder.classList.add('active');
+                activeBookmark = bookmarkId;
+            }
         }
 
         // Load bookmarks into sidebar and main content
@@ -701,13 +780,15 @@
                                     <div class="subcategory-title" onclick="toggleSubcategory(this)">${subcategory}</div>
                                     <div class="link-list collapsed">
                                         ${category.subcategories[subcategory].bookmarks.map(link => `
-                                            <div class="link-placeholder" data-id="${link.id}">
-                                                <div class="link-info" onclick="window.open('${link.url}', '_blank')">
-                                                    <div>${link.title}</div>
+                                            <div class="link-placeholder ${activeBookmark === link.id ? 'active' : ''}" data-id="${link.id}">
+                                                <div class="link-info" onclick="window.open('${link.url}', '_blank')">${link.title}</div>
+                                                <iframe class="link-preview" src="${link.url}" title="${link.title}" loading="lazy"></iframe>
+                                                <div class="link-details">
                                                     ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
                                                     ${link.tags.length ? `<div class="link-tags">${link.tags.join(', ')}</div>` : ''}
                                                 </div>
                                                 <div class="link-actions">
+                                                    <button class="preview-btn" onclick="togglePreview('${link.id}', '${link.url}')">👁️</button>
                                                     <button class="favorite-btn ${link.is_favorite ? 'active' : ''}" onclick="toggleFavorite('${link.id}', ${!link.is_favorite})">★</button>
                                                     <button class="delete-btn" onclick="deleteBookmark('${link.id}')">🗑</button>
                                                 </div>
@@ -756,9 +837,8 @@
         function signout() {
             currentUser = null;
             apiKey = null;
+            activeBookmark = null;
             document.getElementById('userSection').style.display = 'none';
-            document.getElementById('signupModal').querySelector('button[onclick*="Sign Up"]').style.display = 'block';
-            document.getElementById('signinModal').querySelector('button[onclick*="Sign In"]').style.display = 'block';
             loadBookmarks();
         }
 
@@ -982,7 +1062,6 @@
             const subcategoryName = document.getElementById('subcategoryName').value;
 
             try {
-                // Add category
                 const categoryResponse = await fetch(`${API_BASE_URL}/categories`, {
                     method: 'POST',
                     headers: {
@@ -997,7 +1076,6 @@
                 }
                 const categoryId = categoryResult[0].id;
 
-                // Add subcategory
                 const subcategoryResponse = await fetch(`${API_BASE_URL}/subcategories`, {
                     method: 'POST',
                     headers: {
@@ -1065,13 +1143,15 @@
                                     <div class="subcategory-title" onclick="toggleSubcategory(this)">${subcategory}</div>
                                     <div class="link-list collapsed">
                                         ${grouped[category].subcategories[subcategory].map(link => `
-                                            <div class="link-placeholder" data-id="${link.id}">
-                                                <div class="link-info" onclick="window.open('${link.url}', '_blank')">
-                                                    <div>${link.title}</div>
+                                            <div class="link-placeholder ${activeBookmark === link.id ? 'active' : ''}" data-id="${link.id}">
+                                                <div class="link-info" onclick="window.open('${link.url}', '_blank')">${link.title}</div>
+                                                <iframe class="link-preview" src="${link.url}" title="${link.title}" loading="lazy"></iframe>
+                                                <div class="link-details">
                                                     ${link.description ? `<div class="link-description">${link.description}</div>` : ''}
                                                     ${link.tags.length ? `<div class="link-tags">${link.tags.join(', ')}</div>` : ''}
                                                 </div>
                                                 <div class="link-actions">
+                                                    <button class="preview-btn" onclick="togglePreview('${link.id}', '${link.url}')">👁️</button>
                                                     <button class="favorite-btn ${link.is_favorite ? 'active' : ''}" onclick="toggleFavorite('${link.id}', ${!link.is_favorite})">★</button>
                                                     <button class="delete-btn" onclick="deleteBookmark('${link.id}')">🗑</button>
                                                 </div>
@@ -1110,7 +1190,7 @@
                     document.getElementById('categoryCount').textContent = stats.total_categories || 0;
                     document.getElementById('linkCount').textContent = stats.total_bookmarks || 0;
                     document.getElementById('favoritesCount').textContent = stats.favorites || 0;
-                    document.getElementById('memberCount').textContent = stats.total_subcategories || 0; // Using subcategories as proxy for community
+                    document.getElementById('memberCount').textContent = stats.total_subcategories || 0;
                 }
             } catch (error) {
                 console.error('Stats update error:', error);
