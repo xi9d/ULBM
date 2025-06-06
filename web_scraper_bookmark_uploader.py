@@ -7,7 +7,7 @@ from serpapi import GoogleSearch
 import os
 
 # --- Configuration ---
-BASE_API_URL = "https://xi9d.pythonanywhere.com/api"
+BASE_API_URL = ""
 BOOKMARKS_ENDPOINT = f"{BASE_API_URL}/bookmarks"
 CATEGORIES_ENDPOINT = f"{BASE_API_URL}/categories"
 API_KEY = "api here"
